@@ -62,12 +62,12 @@ const Dashboard = ({ services, onUpdate }: DashboardProps) => {
     }
   }
 
-  const handleSave = (service: WebService) => {
+  const handleSave = (service: Omit<WebService, 'id' | 'createdAt' | 'updatedAt'>) => {
     if (editingService) {
       // 수정
       const updated = services.map(s =>
         s.id === editingService.id
-          ? { ...service, id: editingService.id, updatedAt: new Date().toISOString() }
+          ? { ...service, id: editingService.id, createdAt: editingService.createdAt, updatedAt: new Date().toISOString() }
           : s
       )
       onUpdate(updated)
